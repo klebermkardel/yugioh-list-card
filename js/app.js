@@ -79,25 +79,25 @@ function populateFilters(cardsList) {
     })
 }
 
-function filterCards() {
+async function filterCards() {
     console.log("Filtrando...");
 
     const searchTerm = searchInput.value.toLowerCase();
     const selectedType = filterSelect.value;
 
-    visibleCards = allCards.filter(card => {
-        const matchesName = card.name.toLowerCase().includes(searchTerm);
-        const matchesType = selectedType === "" || card.type === selectedType;
-        return matchesName && matchesType;
-    });
-
-    renderCards(visibleCards);
-
-    if (searchTerm !== "" || selectedType !== "") {
+    if (searchTerm !== "") {
+        cardsContainer.innerHTML = `<p>Buscando "${searchTerm}" no catálogo completo...</p>`;
         loadMoreBtn.classList.add('hidden');
+
+        const searchResults = await fetchCards(50, 0, searchTerm);
+        
+        visibleCards = searchResults.filter(card => selectedType === "" || card.type === selectedType);
     } else {
+        visibleCards = allCards.filter(card => selectedType === "" || card.type === selectedType);
         loadMoreBtn.classList.remove('hidden');
     }
+
+    renderCards(visibleCards);
 }
 
 function openModal(card) {
