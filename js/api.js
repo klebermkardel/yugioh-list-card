@@ -1,10 +1,17 @@
 const BASE_URL = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
 
-export async function fetchCards(limit = 50, offset = 0) {
+export async function fetchCards(limit = 50, offset = 0, searchTerm = "") {
     try {
-        const response = await fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?num=${limit}&offset=${offset}`);
+        let url = `${BASE_URL}?num=${limit}&offset=${offset}`;
+        
+        if (searchTerm) {
+            url += `&fname=${encodeURIComponent(searchTerm)}`;
+        }
+        
+        const response = await fetch(url);
         
         if (!response.ok) {
+            if (response.status === 400) return [];
             throw new Error(`Erro na requisição: ${response.status}`);
         }
         
