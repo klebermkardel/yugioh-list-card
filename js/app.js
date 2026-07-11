@@ -85,15 +85,19 @@ function filterCards() {
     const searchTerm = searchInput.value.toLowerCase();
     const selectedType = filterSelect.value;
 
-    const filtered = allCards.filter(card => {
+    visibleCards = allCards.filter(card => {
         const matchesName = card.name.toLowerCase().includes(searchTerm);
-        
         const matchesType = selectedType === "" || card.type === selectedType;
-        
         return matchesName && matchesType;
     });
 
-    renderCards(filtered);
+    renderCards(visibleCards);
+
+    if (searchTerm !== "" || selectedType !== "") {
+        loadMoreBtn.classList.add('hidden');
+    } else {
+        loadMoreBtn.classList.remove('hidden');
+    }
 }
 
 function openModal(card) {
