@@ -1,18 +1,17 @@
 const BASE_URL = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
 
-export async function fetchCards(limit = 50) {
+export async function fetchCards(limit = 50, offset = 0) {
     try {
-        const response = await fetch(`${BASE_URL}?num=${limit}&offset=0`);
-
-        if(!response.ok) {
-            throw new Error (`Erro na requisição: ${response.status}`);
+        const response = await fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?num=${limit}&offset=${offset}`);
+        
+        if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.status}`);
         }
-
-        const jsonResponse = await response.json();
-
-        return jsonResponse.data;
+        
+        const data = await response.json();
+        return data.data;
     } catch (error) {
-        console.error("Erro ao buscar as cartas:", error);
+        console.error("Erro ao buscar cartas:", error);
         return [];
     }
 }
