@@ -44,16 +44,16 @@ function renderCards(cardsList) {
 
 async function init() {
     console.log("Buscando dados da API...");
+    
     allCards = await fetchCards(50);
-    console.log("Cartas recebidas:", allCards)
+    console.log("Cartas recebidas:", allCards);
 
     if (allCards.length === 0) {
-        cardsContainer.innerHTML = `<p>Não foi possível carregar as cartas</p>`;
+        cardsContainer.innerHTML = `<p>Não foi possível carregar as cartas.</p>`;
         return;
     }
 
     populateFilters(allCards);
-
     renderCards(allCards);
 }
 
