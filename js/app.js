@@ -2,6 +2,8 @@ import { fetchCards } from "./api.js";
 
 const cardsContainer = document.querySelector(".cards-container");
 
+const loadMoreBtn = document.querySelector("#load-more");
+
 const searchInput = document.querySelector("#search");
 const filterSelect = document.querySelector("#filters");
 
@@ -13,6 +15,9 @@ const modalType = document.querySelector('#modal-type');
 const modalDesc = document.querySelector('#modal-desc');
 
 let allCards = [];
+let visibleCards = [];
+const cardsPerPage = 50;
+let currentOffset = 0;
 
 function renderCards(cardsList) {
     cardsContainer.innerHTML = '';
@@ -43,18 +48,22 @@ function renderCards(cardsList) {
 }
 
 async function init() {
-    console.log("Buscando dados da API...");
+    console.log("Buscando primeiro lote da API...");
     
-    allCards = await fetchCards(50);
-    console.log("Cartas recebidas:", allCards);
-
-    if (allCards.length === 0) {
+    const firstBatch = await fetchCards(cardsPerPage, currentOffset); 
+    
+    if (firstBatch.length === 0) {
         cardsContainer.innerHTML = `<p>Não foi possível carregar as cartas.</p>`;
+        loadMoreBtn.classList.add('hidden');
         return;
     }
 
+    allCards = firstBatch;
+    visibleCards = allCards;
+
     populateFilters(allCards);
-    renderCards(allCards);
+    
+    renderCards(visibleCards);
 }
 
 function populateFilters(cardsList) {
