@@ -22,8 +22,10 @@ async function init() {
 
         cardElement.innerHTML = `
             <img src="${imageUrl}" alt="${card.name}">
-            <p><strong>${card.name}</strong></p>
-            <p>${card.type}</p>
+            <div class="card-info">
+                <p><strong>${card.name}</strong></p>
+                <p>${card.type}</p>
+            </div>
         `;
 
         cardsContainer.appendChild(cardElement);
