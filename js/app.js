@@ -66,6 +66,7 @@ function filterCards() {
 
     const filtered = allCards.filter(card => {
         const matchesName = card.name.toLowerCase().includes(searchTerm);
+        
         const matchesType = selectedType === "" || card.type === selectedType;
         
         return matchesName && matchesType;
@@ -76,3 +77,4 @@ function filterCards() {
 
 document.addEventListener('DOMContentLoaded', init);
 filterSelect.addEventListener('change', filterCards);
+searchInput.addEventListener('input', filterCards);
