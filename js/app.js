@@ -1,8 +1,16 @@
 import { fetchCards } from "./api.js";
 
 const cardsContainer = document.querySelector(".cards-container");
+
 const searchInput = document.querySelector("#search");
 const filterSelect = document.querySelector("#filters");
+
+const modal = document.querySelector('#modal');
+const modalClose = document.querySelector('.modal-close');
+const modalImg = document.querySelector('#modal-img');
+const modalName = document.querySelector('#modal-name');
+const modalType = document.querySelector('#modal-type');
+const modalDesc = document.querySelector('#modal-desc');
 
 let allCards = [];
 
@@ -27,6 +35,8 @@ function renderCards(cardsList) {
                 <p>${card.type}</p>
             </div>
         `;
+
+        cardElement.addEventListener('click', () => openModal(card));
 
         cardsContainer.appendChild(cardElement);
     });
@@ -75,6 +85,30 @@ function filterCards() {
     renderCards(filtered);
 }
 
+function openModal(card) {
+    const imageUrl = card.card_images[0].image_url;
+
+    modalImg.src = imageUrl;
+    modalImg.alt = card.name;
+    modalName.textContent = card.name;
+    modalType.textContent = `Tipo: ${card.type}`;
+    modalDesc.textContent = card.desc;
+
+    modal.classList.remove('hidden');
+}
+
+function closeModal() {
+    modal.classList.add('hidden');
+}
+
 document.addEventListener('DOMContentLoaded', init);
 filterSelect.addEventListener('change', filterCards);
 searchInput.addEventListener('input', filterCards);
+
+modalClose.addEventListener('click', closeModal);
+
+modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        closeModal();
+    }
+});
