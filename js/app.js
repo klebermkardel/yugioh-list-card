@@ -135,3 +135,26 @@ modal.addEventListener('click', (event) => {
         closeModal();
     }
 });
+
+loadMoreBtn.addEventListener('click', async () => {
+    loadMoreBtn.textContent = "Invocando mais cartas...";
+    loadMoreBtn.disabled = true;
+
+    currentOffset += cardsPerPage;
+
+    console.log(`Buscando cartas a partir da posição ${currentOffset}...`);
+    const nextBatch = await fetchCards(cardsPerPage, currentOffset);
+
+    if (nextBatch.length > 0) {
+        allCards = [...allCards, ...nextBatch];
+        
+        populateFilters(allCards);
+
+        filterCards(); 
+    } else {
+        loadMoreBtn.classList.add('hidden');
+    }
+
+    loadMoreBtn.textContent = "Carregar Mais Cartas";
+    loadMoreBtn.disabled = false;
+});
