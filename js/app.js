@@ -42,7 +42,37 @@ async function init() {
         return;
     }
 
+    populateFilters(allCards);
+
     renderCards(allCards);
 }
 
+function populateFilters(cardsList) {
+    const types = new Set(cardsList.map(card => card.type));
+
+    filterSelect.innerHTML = `<option value="">Todos os Tipos</option>`;
+
+    types.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        filterSelect.appendChild(option);
+    })
+}
+
+function filterCards() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const selectedType = filterSelect.value;
+
+    const filtered = allCards.filter(card => {
+        const matchesName = card.name.toLowerCase().includes(searchTerm);
+        const matchesType = selectedType === "" || card.type === selectedType;
+        
+        return matchesName && matchesType;
+    });
+
+    renderCards(filtered);
+}
+
 document.addEventListener('DOMContentLoaded', init);
+filterSelect.addEventListener('change', filterCards);
