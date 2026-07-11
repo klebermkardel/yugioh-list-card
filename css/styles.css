@@ -74,3 +74,34 @@ h1 {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 0;
+}
+
+.btn-primary {
+    background-color: #ffbb00;
+    color: #121214;
+    border: none;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 15px rgba(255, 187, 0, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #e6a800;
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.btn-primary.hidden {
+    display: none;
+}
