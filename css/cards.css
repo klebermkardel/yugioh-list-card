@@ -47,3 +47,12 @@
     font-size: 0.85rem;
     color: #8d8d99;
 }
+
+.no-results {
+    grid-column: 1 / -1; /* Ocupa todas as colunas disponíveis no grid */
+    text-align: center;
+    font-size: 1.2rem;
+    color: #8d8d99;
+    padding: 3rem 0;
+    width: 100%;
+}

@@ -10,9 +10,9 @@ function renderCards(cardsList) {
     cardsContainer.innerHTML = '';
 
     if(cardsList.length === 0) {
-        cardsContainer.innerHTML = `<p>Nenhuma carta encontrada com os filtros aplicados.</p>`;
-        return;
-    }
+    cardsContainer.innerHTML = `<p class="no-results">Nenhuma carta encontrada com os filtros aplicados.</p>`;
+    return;
+}
 
     cardsList.forEach(card => {
         const cardElement = document.createElement('div');
