@@ -71,6 +71,8 @@ function populateFilters(cardsList) {
 }
 
 function filterCards() {
+    console.log("Filtrando...");
+
     const searchTerm = searchInput.value.toLowerCase();
     const selectedType = filterSelect.value;
 
@@ -101,9 +103,17 @@ function closeModal() {
     modal.classList.add('hidden');
 }
 
+function debounce(func, delay = 300) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => func(...args), delay);
+    };
+}
+
 document.addEventListener('DOMContentLoaded', init);
 filterSelect.addEventListener('change', filterCards);
-searchInput.addEventListener('input', filterCards);
+searchInput.addEventListener('input', debounce(filterCards, 300));
 
 modalClose.addEventListener('click', closeModal);
 
